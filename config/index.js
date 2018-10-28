@@ -38,10 +38,10 @@ module.exports = {
 
   uat: {
     env: require('./uat.env'),
-    index: path.resolve(__dirname, '../uat-pay-outer/index.html'),
-    assetsRoot: path.resolve(__dirname, '../uat-pay-outer'),
+    index: path.resolve(__dirname, '../uat-Qian-Manage/index.html'),
+    assetsRoot: path.resolve(__dirname, '../uat-Qian-Manage'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/uat-pay-outer/',
+    assetsPublicPath: './',
     productionSourceMap: false,
     // Gzip off by default as many popular static hosts such as
     // Surge or Netlify already gzip all static assets for you.
@@ -57,10 +57,10 @@ module.exports = {
   },
   uprod: {
     env: require('./uprod.env'),
-    index: path.resolve(__dirname, '../uprod-pay-outer/index.html'),
-    assetsRoot: path.resolve(__dirname, '../uprod-pay-outer'),
+    index: path.resolve(__dirname, '../uprod-Qian-Manage/index.html'),
+    assetsRoot: path.resolve(__dirname, '../uprod-Qian-Manage'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/uprod-pay-outer/',
+    assetsPublicPath: '/uprod-Qian-Manage/',
     productionSourceMap: false,
     // Gzip off by default as many popular static hosts such as
     // Surge or Netlify already gzip all static assets for you.
@@ -79,13 +79,13 @@ module.exports = {
     env: require('./prod.env'),
     // Template for index.html
     //TODO
-    index: path.resolve(__dirname, '../pay-outer/index.html'),
+    index: path.resolve(__dirname, '../Qian-Manage/index.html'),
 
     // Paths
     //TODO
-    assetsRoot: path.resolve(__dirname, '../pay-outer'),
+    assetsRoot: path.resolve(__dirname, '../Qian-Manage'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/pay-outer/',
+    assetsPublicPath: '/Qian-Manage/',
 
     /**
      * Source Maps

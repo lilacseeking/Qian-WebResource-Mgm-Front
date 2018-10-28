@@ -14,7 +14,9 @@ import HttpInterceptors from './HttpInterceptors'
 import VeHistogram from 'v-charts/lib/histogram'
 import VeLine from 'v-charts/lib/line'
 import cookieStore from './common/js/cookie'
-
+import VideoPlayer from 'vue-video-player'
+// import './views/user/custom-theme.css'
+Vue.use(VideoPlayer)
 Vue.component(VeHistogram.name, VeHistogram)
 Vue.component(VeLine.name, VeLine)
 
@@ -22,7 +24,7 @@ Vue.component(VeLine.name, VeLine)
 //启用饿了么ui
 Vue.use(ElementUI)
 Vue.use(Vuex)
-
+// require('!style-loader!css-loader!less-loader!./views/user/custom-theme.css');
 router.beforeEach((to, from, next) => {
   NProgress.start();
   if (to.path == '/login') {

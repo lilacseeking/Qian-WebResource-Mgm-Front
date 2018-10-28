@@ -4,6 +4,7 @@ import Login from './views/login/Login'
 import NotFound from './views/404.vue'
 import Home from './views/home/Home'
 import HelloWorld from './views/testComponent/HelloWorld'
+import Test from './views/user/test'
 
 // 用户管理
 import UserMgm from './views/user/userMgm'
@@ -27,8 +28,9 @@ let routes = [
     name: '用户管理',
     iconCls: 'el-icon-menu',
     children: [
-      {path:'/',redirect:'userMgm', hidden: true},
+      // {path:'/',redirect:'userMgm', hidden: true},
       {path:'/userMgm',component: UserMgm, name:'用户列表'},
+      // {path:'/test',component: Test, name:'测试路由'},
     ]
   },
 ];

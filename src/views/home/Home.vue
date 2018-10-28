@@ -110,7 +110,7 @@
         data() {
             return {
                 isActive:{},
-                sysName:'支付网关外围系统',
+                sysName:'芊芊學堂管理系統',
                 collapsed:false,
                 sysUserName: '',
                 sysUserAvatar: '',
