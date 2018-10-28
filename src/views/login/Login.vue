@@ -4,7 +4,7 @@
       <div class="header">
         <img alt="" class="logo" src="../../assets/LOGO-01.png" />
       </div>
-      <div class="desc">芊芊学堂管理后台登录</div>
+      <div class="desc">后台管理系统</div>
     </div>
     <div class="main">
       <el-tabs class="custom-tab" v-model="activeName">
@@ -90,7 +90,7 @@
           envDefault:true,
           autoLogin: true,
           activeName: 'first',
-          footerTxt:new Date().getFullYear()+' 凯京集团-研发中心',
+          // footerTxt:new Date().getFullYear()+' 凯京集团-研发中心',
           loginUser:{
             mobile: '',
             code: '',

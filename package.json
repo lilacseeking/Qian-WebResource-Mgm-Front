@@ -1,7 +1,7 @@
 {
-  "name": "pay-outer-system",
+  "name": "npm ",
   "version": "1.0.0",
-  "description": "支付网关外围系统",
+  "description": "芊芊学堂后台管理系统",
   "author": "keking",
   "private": true,
   "scripts": {
@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "ajv": "^6.0.0",
-    "axios": "^0.18.0",
     "echarts": "^4.1.0",
     "element-ui": "^2.4.8",
     "express": "^3.0.6",
@@ -24,11 +23,13 @@
     "v-charts": "^1.17.10",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
+    "vue-video-player": "^5.0.2",
     "vuex": "^3.0.1",
     "xlsx-style": "^0.8.13"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
+    "axios": "^0.18.0",
     "babel-core": "^6.22.1",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
     "babel-loader": "^7.1.1",

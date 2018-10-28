@@ -6,11 +6,11 @@ let httpRes = '';
 if (env === 'development') {
      httpRes = 'http://127.0.0.1:8077';
 }  else if (env === 'uat') {
-    httpRes = 'https://uapi.keking.cn:8002/pay-outer';
+    httpRes = 'http://47.107.110.132:8077';
 } else if (env === 'uprod') {
-  httpRes = 'https://uapi.keking.cn:8002/pay-outer';
+  httpRes = 'https://uapi.keking.cn:8002/Qian-Manage';
 }else if (env === 'production'){
-    httpRes = 'https://api.keking.cn:8002/pay-outer';
+    httpRes = 'https://api.keking.cn:8002/Qian-Manage';
 } else {
     httpRes = '';
 }
