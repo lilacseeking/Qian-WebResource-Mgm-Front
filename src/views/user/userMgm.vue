@@ -142,6 +142,7 @@
         updateUserInfo(){},
       //  获取用户列表
         getUserListByPage(){
+          debugger
           this.listLoading = true;
           userMgmService.getUserListByPage({params:this.filter}).then(res =>{
             if(res.code =="0"){

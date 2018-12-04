@@ -17,8 +17,8 @@
             <el-input @keyup.enter.native="loginByMobilePhone('mobilePhoneForm')" prefix-icon="el-icon-mobile-phone" v-model.trim="loginUser.mobile" auto-complete="off" placeholder="请输入手机号" clearable></el-input>
           </el-form-item>
 
-          <el-form-item class="sendCodeBtn" prop="code">
-            <el-input @keyup.enter.native="loginByMobilePhone('mobilePhoneForm')" prefix-icon="el-icon-message" v-model.trim="loginUser.code" style="width: 73%" placeholder="请输入验证码"></el-input>
+          <el-form-item class="sendCodeBtn" prop="verifyCode">
+            <el-input @keyup.enter.native="loginByMobilePhone('mobilePhoneForm')" prefix-icon="el-icon-message" v-model.trim="loginUser.verifyCode" style="width: 73%" placeholder="请输入验证码"></el-input>
             <el-button @click.prevent="getMobileCode" auto-complete="off" v-show="showTime" size="small">获取验证码</el-button>
             <el-button type="primary" auto-complete="off" v-show="!showTime">{{timeText}}</el-button>
           </el-form-item>
@@ -31,9 +31,9 @@
             <!-- <el-button @click="handleReset">重置</el-button> -->
           </el-form-item>
 
-          <el-form-item>
-            <el-button @click="envDefaultClick" v-if="envDefault" style="width:100%;">开发环境直接登录</el-button>
-          </el-form-item>
+          <!--<el-form-item>-->
+            <!--<el-button @click="envDefaultClick" v-if="envDefault" style="width:100%;">开发环境直接登录</el-button>-->
+          <!--</el-form-item>-->
 
         </el-form>
         </el-tab-pane>
@@ -41,7 +41,7 @@
         <el-form class="custom-form" label-position="left" label-width="70px" :model="loginUser" ref="usernameForm" :rules="rules">
 
           <el-form-item prop="username">
-            <el-input @keyup.enter.native="loginByUsername('usernameForm')" v-model.trim="loginUser.username" auto-complete="off" placeholder="请输入用户名" clearable>
+            <el-input @keyup.enter.native="loginByUsername('usernameForm')" v-model.trim="loginUser.username" auto-complete="off" placeholder="请输入手机号" clearable>
               <i slot="prefix" class="el-input__icon svg-account"></i>
             </el-input>
           </el-form-item>
@@ -60,9 +60,9 @@
             <!-- <el-button @click="handleReset">重置</el-button> -->
           </el-form-item>
 
-          <el-form-item>
-            <el-button @click="envDefaultClick" v-if="envDefault" style="width:100%;">开发环境直接登录</el-button>
-          </el-form-item>
+          <!--<el-form-item>-->
+            <!--<el-button @click="envDefaultClick" v-if="envDefault" style="width:100%;">开发环境直接登录</el-button>-->
+          <!--</el-form-item>-->
 
         </el-form>
         </el-tab-pane>
@@ -72,7 +72,7 @@
     </div>
     <div class="footer">
       <div class="copyright">
-        <span v-text="footerTxt"></span>
+        <!--<span v-text="footerTxt"></span>-->
       </div>
     </div>
   </div>
@@ -90,10 +90,9 @@
           envDefault:true,
           autoLogin: true,
           activeName: 'first',
-          // footerTxt:new Date().getFullYear()+' 凯京集团-研发中心',
           loginUser:{
             mobile: '',
-            code: '',
+            verifyCode: '',
             username: '',
             userName: '',
             password: ''
@@ -105,7 +104,7 @@
               { required: true, message: '请输入手机号', trigger: 'blur' },
               { min: 11, max: 11, message: '手机号不存在', trigger: 'blur' }
             ],
-            code: [
+            verifyCode: [
               { required: true, message: '请输入验证码', trigger: 'blur' },
               { min: 4, max: 6, message: '验证码错误', trigger: 'blur' }
             ],
@@ -137,8 +136,8 @@
           this.countDown();
       },
       sendSmsCode() {
-        loginService.sendSmsCode(this.loginUser.mobile).then(res =>{
-          if (res && res.result && res.result.toUpperCase() === 'SUCCESS') {
+        loginService.sendSmsCode({mobile:this.loginUser.mobile}).then(res =>{
+          if (Object.is(res.code,0)) {
             this.$set(this.loginUser,'username',res.msg);
             this.$message({
               showClose: true,
@@ -173,22 +172,41 @@
           this.$refs[formName].validate((valid) => {
               if (valid) {
                   this.usernameLoginLoading = true;
-                  const {username, password} = this.loginUser;
-                  const loginParams = 'username=' + username + '&password=' + password + '&client_id=pay-mgm&client_secret=pay-mgm&grant_type=password&scope=read write';
-                  loginService.loginToGetToken(loginParams).then(data => {
+                  this.loginUser.mobile = this.loginUser.username;
+                  // const {username, password} = this.loginUser;
+                  // const loginParams = 'username=' + username + '&password=' + password + '&client_id=pay-mgm&client_secret=pay-mgm&grant_type=password&scope=read write';
+                  // loginService.loginToGetToken(loginParams).then(data => {
+                // let param =
+                //   {
+                //     mobile: '18803838075',
+                //     verifyCode: '114477'
+                //   };
+                  loginService.loginToGetTokenByPwd(this.loginUser).then(res => {
+                    if (res.code==0){
+                      debugger;
                       this.usernameLoginLoading = false;
-                      const {access_token, error, error_description} = data;
-                      if (access_token) {
-                          sessionStorage.setItem('user', '{"username":"' + username + '","token":"' + access_token + '"}');
-                          this.setCookie(username, access_token);
-                          this.$router.push({path: '/'});
-
-                      } else if(error) {
-                          this.$message({
-                              message: error_description,
-                              type: 'error'
-                          });
-                      }
+                      sessionStorage.setItem('user', '{"username":"' + res.content.username + '","token":"' + res.content.token + '"}');
+                      this.setCookie(res.content.username, res.content.token);
+                      this.$router.push({path: '/'});
+                    } else{
+                      this.$message({
+                                message: res.content,
+                                type: 'error'
+                            });
+                    }
+                      // this.usernameLoginLoading = false;
+                      // const {access_token, error, error_description} = data;
+                      // if (access_token) {
+                      //     sessionStorage.setItem('user', '{"username":"' + username + '","token":"' + access_token + '"}');
+                      //     this.setCookie(username, access_token);
+                      //     this.$router.push({path: '/'});
+                      //
+                      // } else if(error) {
+                      //     this.$message({
+                      //         message: error_description,
+                      //         type: 'error'
+                      //     });
+                      // }
                   });
               }
           });
@@ -198,22 +216,30 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.MobilePhoneLoginLoading = true;
-              const {username, mobile, code} = this.loginUser;
-              const loginParams = 'username=' + username + '&mobile=' + mobile + '&code=' + code + '&client_id=accounts&client_secret=accounts&grant_type=mobile_code&scope=read write';
-              loginService.loginToGetToken(loginParams).then(data => {
+              // const {username, mobile, code} = this.loginUser;
+              // const loginParams = 'username=' + username + '&mobile=' + mobile + '&code=' + code + '&client_id=accounts&client_secret=accounts&grant_type=mobile_code&scope=read write';
+              loginService.loginToGetToken(this.loginUser).then(res => {
                   this.MobilePhoneLoginLoading = false;
-                  const {access_token, error, error_description} = data;
-                  if (access_token) {
-                      sessionStorage.setItem('user', '{"username":"' + username + '","token":"' + access_token + '"}');
-                      this.setCookie(username, access_token);
-                      this.$router.push({path: '/'});
-
-                  } else if(error) {
-                      this.$message({
-                          message: error_description,
-                          type: 'error'
-                      });
-                  }
+                  // const {access_token, error, error_description} = data;
+                  // if (access_token) {
+                  //     sessionStorage.setItem('user', '{"username":"' + username + '","token":"' + access_token + '"}');
+                  //     this.setCookie(username, access_token);
+                  //     this.$router.push({path: '/'});
+                  //
+                  // } else if(error) {
+                  //     this.$message({
+                  //         message: error_description,
+                  //         type: 'error'
+                  //     });
+                  // }
+                // 判断回应、填充session、页面跳转
+                if (res.code=="0"){
+                  sessionStorage.setItem('user', '{"username":"' + res.content.username + '","token":"' + res.content.token + '"}');
+                  this.setCookie(res.content.username, res.content.token);
+                  this.$router.push({path: '/'});
+                } else{
+                  this.$message.error(res.content);
+                }
               });
           }
         });

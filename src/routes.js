@@ -5,9 +5,12 @@ import NotFound from './views/404.vue'
 import Home from './views/home/Home'
 import HelloWorld from './views/testComponent/HelloWorld'
 import Test from './views/user/test'
+import AddTeacherMgm from './views/teacher/AddTeacherMgm'
 
 // 用户管理
 import UserMgm from './views/user/userMgm'
+// 课程管理
+import AddVideoCourse from './views/course/AddVideoCourse'
 
 let routes = [
   {
@@ -28,8 +31,30 @@ let routes = [
     name: '用户管理',
     iconCls: 'el-icon-menu',
     children: [
-      // {path:'/',redirect:'userMgm', hidden: true},
+      {path:'/',redirect:'userMgm', hidden: true},
       {path:'/userMgm',component: UserMgm, name:'用户列表'},
+      // {path:'/test',component: Test, name:'测试路由'},
+    ]
+  },
+  {
+    path: '/',
+    component: Home,
+    name: '课程管理',
+    iconCls: 'el-icon-menu',
+    children: [
+      // {path:'/',redirect:'userMgm', hidden: true},
+      {path:'/addCourse',component: AddVideoCourse, name:'新增课程'},
+      // {path:'/test',component: Test, name:'测试路由'},
+    ]
+  },
+  {
+    path: '/',
+    component: Home,
+    name: '教师管理',
+    iconCls: 'el-icon-menu',
+    children: [
+      // {path:'/',redirect:'userMgm', hidden: true},
+      {path:'/addTeacher',component: AddTeacherMgm, name:'新增教师'},
       // {path:'/test',component: Test, name:'测试路由'},
     ]
   },
